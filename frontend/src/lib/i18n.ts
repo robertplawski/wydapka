@@ -51,6 +51,10 @@ export interface Translations {
   name: string;
   whatDidYouSpendOn: string;
   updateSpending: string;
+
+  // Mobile prompt
+  openOnMobile: string;
+  dontShowAgain: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -100,6 +104,8 @@ export const translations: Record<Language, Translations> = {
     name: 'Name',
     whatDidYouSpendOn: 'What did you spend on?',
     updateSpending: 'Update Spending',
+    openOnMobile: 'Open on Mobile',
+    dontShowAgain: "Don't show again",
   },
   pl: {
     appTitle: 'WYDAPKA',
@@ -147,6 +153,8 @@ export const translations: Record<Language, Translations> = {
     name: 'Nazwa',
     whatDidYouSpendOn: 'Na co wydałeś?',
     updateSpending: 'Aktualizuj wydatek',
+    openOnMobile: 'Otwórz na telefonie',
+    dontShowAgain: 'Nie pokazuj ponownie',
   },
   pt: {
     appTitle: 'WYDAPKA',
@@ -194,6 +202,8 @@ export const translations: Record<Language, Translations> = {
     name: 'Nome',
     whatDidYouSpendOn: 'No que você gastou?',
     updateSpending: 'Atualizar Gasto',
+    openOnMobile: 'Abrir no celular',
+    dontShowAgain: 'Não mostrar novamente',
   },
 };
 

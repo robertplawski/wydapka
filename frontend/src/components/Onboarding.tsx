@@ -43,7 +43,7 @@ export function Onboarding({ onComplete, t, languages, onLanguageChange, initial
 
   useEffect(() => {
     onLanguageChange(language);
-  }, [language, onLanguageChange]);
+  }, [language]);
 
   const totalBudget = parseFloat(budget) || 0;
 

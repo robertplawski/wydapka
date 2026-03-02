@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Onboarding } from './components/Onboarding';
 import { Dashboard } from './components/Dashboard';
+import { MobilePrompt } from './components/MobilePrompt';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import type { Budget, Spending, AppState, Language } from './lib/types';
+import {DONT_SHOW_KEY} from './components/MobilePrompt.tsx'; 
 import { translations, LANGUAGES } from './lib/i18n';
 
 const STORAGE_KEY = 'wydapka-state';
@@ -80,36 +82,39 @@ function App() {
       spendings: [],
       language: state.language,
     });
+    localStorage.removeItem(DONT_SHOW_KEY);
+    
   };
 
   const handleLanguageChange = (lang: Language) => {
     setState(prev => ({ ...prev, language: lang }));
   };
 
-  if (!state.isOnboarded || !state.budget) {
-    return (
-      <Onboarding
-        onComplete={handleOnboardingComplete}
-        t={t}
-        languages={LANGUAGES}
-        onLanguageChange={handleLanguageChange}
-        initialLanguage={state.language}
-      />
-    );
-  }
-
   return (
-    <Dashboard
-      budget={state.budget}
-      spendings={state.spendings}
-      onAddSpending={handleAddSpending}
-      onDeleteSpending={handleDeleteSpending}
-      onUpdateSpending={handleUpdateSpending}
-      onReset={handleReset}
-      darkMode={darkMode}
-      setDarkMode={setDarkMode}
-      t={t}
-    />
+    <>
+      <MobilePrompt t={t} />
+      {!state.isOnboarded || !state.budget ? (
+        <Onboarding
+          onComplete={handleOnboardingComplete}
+          t={t}
+          languages={LANGUAGES}
+          onLanguageChange={handleLanguageChange}
+          initialLanguage={state.language}
+        />
+      ) : (
+        <Dashboard
+          budget={state.budget}
+          spendings={state.spendings}
+          onAddSpending={handleAddSpending}
+          onDeleteSpending={handleDeleteSpending}
+          onUpdateSpending={handleUpdateSpending}
+          onReset={handleReset}
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+          t={t}
+        />
+      )}
+    </>
   );
 }
 
