@@ -367,7 +367,7 @@ function AddSpendingModal({ categories, currency, editingSpending, onClose, onAd
                   type="button"
                   onClick={() => setSelectedDay(day.value)}
                   className={cn(
-                    "px-2 py-2 rounded-lg border-2 transition-all text-xs font-medium",
+                    "sm:p-2 py-2 rounded-lg border-2 transition-all text-xs font-medium text-center",
                     selectedDay === day.value
                       ? "border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
                       : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 dark:text-gray-300"
@@ -388,7 +388,7 @@ function AddSpendingModal({ categories, currency, editingSpending, onClose, onAd
               onChange={(e) => setAmount(e.target.value)}
               placeholder={currency + "0.00"}
               autoFocus
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-lg"
+              className="w-full none px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-lg"
               required
             />
           </div>

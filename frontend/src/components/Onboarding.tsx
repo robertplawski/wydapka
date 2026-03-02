@@ -16,10 +16,8 @@ type Step = 'language' | 'budget' | 'categories' | 'savings';
 
 const DEFAULT_CATEGORIES = [
   { name: 'Food', color: '#ef4444' },
-  { name: 'Travel', color: '#3b82f6' },
-  { name: 'Entertainment', color: '#8b5cf6' },
+  { name: 'Culture', color: '#8b5cf6' },
   { name: 'Shopping', color: '#ec4899' },
-  { name: 'Bills', color: '#f59e0b' },
   { name: 'Other', color: '#6b7280' },
 ];
 
@@ -226,7 +224,7 @@ export function Onboarding({ onComplete, t, languages, onLanguageChange, initial
                         type="text"
                         value={category.name}
                         onChange={(e) => handleCategoryChange(index, 'name', e.target.value)}
-                        className="flex-1 font-medium dark:text-white border-b border-transparent focus:border-blue-500 outline-none"
+                        className="w-full flex-1 font-medium dark:text-white border-b border-transparent focus:border-blue-500 outline-none"
                       />
                       {categories.length > 1 && (
                         <button
@@ -251,7 +249,7 @@ export function Onboarding({ onComplete, t, languages, onLanguageChange, initial
                         value={category.budgetValue || ''}
                         onChange={(e) => handleCategoryChange(index, 'budgetValue', e.target.value)}
                         placeholder={category.budgetType === 'percentage' ? '0' : '0.00'}
-                        className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg text-sm"
+                        className="w-full flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg text-sm"
                       />
                       <span className="flex items-center text-gray-500 dark:text-gray-400 text-sm">
                         {category.budgetType === 'percentage' ? '%' : CURRENCIES.find(c => c.value === currency)?.symbol}
@@ -332,7 +330,7 @@ export function Onboarding({ onComplete, t, languages, onLanguageChange, initial
                       value={savingsValue}
                       onChange={(e) => setSavingsValue(e.target.value)}
                       placeholder="0"
-                      className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                      className="w-full flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                     />
                     <span className="flex items-center text-gray-500 dark:text-gray-400">
                       {savingsType === 'percentage' ? '%' : CURRENCIES.find(c => c.value === currency)?.symbol}
