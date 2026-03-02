@@ -51,6 +51,7 @@ export interface Translations {
   name: string;
   whatDidYouSpendOn: string;
   updateSpending: string;
+  dayOfWeek: string;
 
   // Mobile prompt
   openOnMobile: string;
@@ -104,6 +105,7 @@ export const translations: Record<Language, Translations> = {
     name: 'Name',
     whatDidYouSpendOn: 'What did you spend on?',
     updateSpending: 'Update Spending',
+    dayOfWeek: 'Day of Week',
     openOnMobile: 'Open on Mobile',
     dontShowAgain: "Don't show again",
   },
@@ -153,6 +155,7 @@ export const translations: Record<Language, Translations> = {
     name: 'Nazwa',
     whatDidYouSpendOn: 'Na co wydałeś?',
     updateSpending: 'Aktualizuj wydatek',
+    dayOfWeek: 'Dzień tygodnia',
     openOnMobile: 'Otwórz na telefonie',
     dontShowAgain: 'Nie pokazuj ponownie',
   },
@@ -202,6 +205,7 @@ export const translations: Record<Language, Translations> = {
     name: 'Nome',
     whatDidYouSpendOn: 'No que você gastou?',
     updateSpending: 'Atualizar Gasto',
+    dayOfWeek: 'Dia da Semana',
     openOnMobile: 'Abrir no celular',
     dontShowAgain: 'Não mostrar novamente',
   },

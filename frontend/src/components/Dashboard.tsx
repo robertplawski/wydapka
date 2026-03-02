@@ -2,9 +2,19 @@ import { useState } from 'react';
 import { CURRENCIES } from '../lib/types';
 import type { Budget, Spending } from '../lib/types';
 import type { Translations } from '../lib/i18n';
-import { cn, getToday } from '../lib/utils';
+import { cn, getToday, getDateFromDayOfWeek } from '../lib/utils';
 import { Plus, X, TrendingUp, TrendingDown, Moon, Sun, Pencil, Trash2, Settings } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+
+const DAYS_OF_WEEK = [
+  { value: 0, label: 'Mon' },
+  { value: 1, label: 'Tue' },
+  { value: 2, label: 'Wed' },
+  { value: 3, label: 'Thu' },
+  { value: 4, label: 'Fri' },
+  { value: 5, label: 'Sat' },
+  { value: 6, label: 'Sun' },
+];
 
 interface DashboardProps {
   budget: Budget;
@@ -313,6 +323,14 @@ function AddSpendingModal({ categories, currency, editingSpending, onClose, onAd
   const [name, setName] = useState(editingSpending?.name || '');
   const [amount, setAmount] = useState(editingSpending?.amount.toString() || '');
   const [categoryId, setCategoryId] = useState(editingSpending?.categoryId || categories[0]?.id || '');
+  const [selectedDay, setSelectedDay] = useState(() => {
+    if (editingSpending?.date) {
+      const date = new Date(editingSpending.date);
+      return date.getDay() === 0 ? 6 : date.getDay() - 1;
+    }
+    const today = new Date();
+    return today.getDay() === 0 ? 6 : today.getDay() - 1;
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -322,7 +340,7 @@ function AddSpendingModal({ categories, currency, editingSpending, onClose, onAd
       name,
       amount: parseFloat(amount),
       categoryId,
-      date: getToday(),
+      date: getDateFromDayOfWeek(selectedDay),
     });
     onClose();
   };
@@ -340,6 +358,27 @@ function AddSpendingModal({ categories, currency, editingSpending, onClose, onAd
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.dayOfWeek}</label>
+            <div className="grid grid-cols-7 gap-1">
+              {DAYS_OF_WEEK.map(day => (
+                <button
+                  key={day.value}
+                  type="button"
+                  onClick={() => setSelectedDay(day.value)}
+                  className={cn(
+                    "px-2 py-2 rounded-lg border-2 transition-all text-xs font-medium",
+                    selectedDay === day.value
+                      ? "border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+                      : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 dark:text-gray-300"
+                  )}
+                >
+                  {day.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.amount}</label>
             <input
