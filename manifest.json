@@ -1,0 +1,16 @@
+{
+  "name": "WYDAPKA - Personal Budget Manager",
+  "short_name": "WYDAPKA",
+  "description": "Manage your personal budget and track expenditures",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
