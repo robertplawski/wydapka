@@ -3,6 +3,7 @@ import { CURRENCIES } from '../lib/types';
 import type { Currency, Category, Budget, Spending, Language } from '../lib/types';
 import type { Translations, LANGUAGES } from '../lib/i18n';
 import { cn } from '../lib/utils';
+import { pwaInstallHandler } from 'pwa-install-handler';
 
 interface OnboardingProps {
   onComplete: (budget: Budget, spendings: Spending[]) => void;
@@ -12,7 +13,7 @@ interface OnboardingProps {
   initialLanguage: Language;
 }
 
-type Step = 'language' | 'budget' | 'categories' | 'savings';
+type Step = 'language' | 'install' | 'budget' | 'categories' | 'savings';
 
 const DEFAULT_CATEGORIES = [
   { name: 'Food', color: '#ef4444' },
@@ -38,16 +39,61 @@ export function Onboarding({ onComplete, t, languages, onLanguageChange, initial
   );
   const [savingsType, setSavingsType] = useState<'percentage' | 'fixed'>('percentage');
   const [savingsValue, setSavingsValue] = useState('');
+  const [canInstall, setCanInstall] = useState(false);
+  const [isInstalling, setIsInstalling] = useState(false);
 
   useEffect(() => {
     onLanguageChange(language);
   }, [language]);
 
+  // Check if PWA can be installed when entering install step
+  useEffect(() => {
+    if (step === 'install') {
+      checkPwaStatus();
+    }
+  }, [step]);
+
+  const checkPwaStatus = () => {
+    if (!pwaInstallHandler.canInstall()) {
+      // If PWA cannot be installed (already installed or not supported), skip to next step
+      setStep('budget');
+      return;
+    }
+    setCanInstall(true);
+
+    // Listen for install state changes
+    const listener = (canInstallResult: boolean) => {
+      setCanInstall(canInstallResult);
+      if (canInstallResult) {
+        //setStep('budget');
+      }
+    };
+
+    pwaInstallHandler.addListener(listener);
+
+    return () => {
+      pwaInstallHandler.removeListener(listener);
+    };
+  };
+
+  const handleInstallClick = async () => {
+    setIsInstalling(true);
+    const success = await pwaInstallHandler.install();
+    if (success) {
+      setStep('budget');
+    }
+    setIsInstalling(false);
+  };
+
+  const handleContinueWithoutInstall = () => {
+    setStep('budget');
+  };
+
   const totalBudget = parseFloat(budget) || 0;
 
   const handleLanguageSelect = (lang: Language) => {
     setLanguage(lang);
-    setStep('budget');
+    setStep('install');
   };
 
   const handleBudgetNext = () => {
@@ -151,6 +197,46 @@ export function Onboarding({ onComplete, t, languages, onLanguageChange, initial
                   </button>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Install step */}
+          {step === 'install' && (
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 text-center">
+              <div className="mb-6">
+                <div className="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-10 h-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{t.installApp}</h2>
+                <p className="text-gray-600 dark:text-gray-400">{t.installAppDescription}</p>
+              </div>
+
+              {canInstall ? (
+                <div className="space-y-3">
+                  <button
+                    onClick={handleInstallClick}
+                    disabled={isInstalling}
+                    className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  >
+                    {isInstalling ? '...' : t.installNow}
+                  </button>
+                  <button
+                    onClick={handleContinueWithoutInstall}
+                    className="w-full py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-white transition-colors"
+                  >
+                    {t.continueInBrowser}
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={handleContinueWithoutInstall}
+                  className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                >
+                  {t.continue}
+                </button>
+              )}
             </div>
           )}
 

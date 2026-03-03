@@ -56,6 +56,13 @@ export interface Translations {
   // Mobile prompt
   openOnMobile: string;
   dontShowAgain: string;
+
+  // PWA Install
+  installApp: string;
+  installAppDescription: string;
+  installNow: string;
+  continueInBrowser: string;
+  appInstalled: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -108,6 +115,11 @@ export const translations: Record<Language, Translations> = {
     dayOfWeek: 'Day of Week',
     openOnMobile: 'Open on Mobile',
     dontShowAgain: "Don't show again",
+    installApp: 'Install App',
+    installAppDescription: 'Install WYDAPKA on your device for the best experience. Access it quickly from your home screen.',
+    installNow: 'Install Now',
+    continueInBrowser: 'Continue in Browser',
+    appInstalled: 'App is installed!',
   },
   pl: {
     appTitle: 'WYDAPKA',
@@ -158,6 +170,11 @@ export const translations: Record<Language, Translations> = {
     dayOfWeek: 'Dzień tygodnia',
     openOnMobile: 'Otwórz na telefonie',
     dontShowAgain: 'Nie pokazuj ponownie',
+    installApp: 'Zainstaluj aplikację',
+    installAppDescription: 'Zainstaluj WYDAPKA na swoim urządzeniu, aby uzyskać najlepsze doświadczenie. Szybko dostępaj z ekranu głównego.',
+    installNow: 'Zainstaluj teraz',
+    continueInBrowser: 'Kontynuuj w przeglądarce',
+    appInstalled: 'Aplikacja zainstalowana!',
   },
   pt: {
     appTitle: 'WYDAPKA',
@@ -208,6 +225,11 @@ export const translations: Record<Language, Translations> = {
     dayOfWeek: 'Dia da Semana',
     openOnMobile: 'Abrir no celular',
     dontShowAgain: 'Não mostrar novamente',
+    installApp: 'Instalar App',
+    installAppDescription: 'Instale o WYDAPKA no seu dispositivo para a melhor experiência. Acesse rapidamente pela tela inicial.',
+    installNow: 'Instalar Agora',
+    continueInBrowser: 'Continuar no Navegador',
+    appInstalled: 'Aplicativo instalado!',
   },
 };
 
